@@ -216,7 +216,7 @@ html {
     margin: 0 auto !important; 
     width: 100% !important;
     top: 0;
-    left: 55px;
+    left: 50%;
     flex-direction: column;
     height: auto;
     margin: 0;
