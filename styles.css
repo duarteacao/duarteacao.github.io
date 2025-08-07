@@ -212,13 +212,12 @@ html {
     justify-content: flex-start;
     align-items: flex-start;
     position: relative;
-    left: 13vw !important;          
+    left: 100px !important;          
     margin: 0 auto !important; 
     width: 100% !important;
     top: 0;
     flex-direction: column;
     height: auto;
-    margin: 0;
     gap: 10px;
     width: 100%;
   }
