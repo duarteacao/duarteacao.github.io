@@ -173,7 +173,7 @@ html {
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    font-size: 18px;
+    font-size: 22px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -196,7 +196,7 @@ html {
 
   .dogGif {
     position: sticky;
-    top: 40px;
+    top: 20px;
     left: 0;
     height: auto;
     width: 70%;
@@ -258,4 +258,87 @@ html {
   .content.open {
     margin-right: 0;
   }
+}
+
+
+@media (min-height: 900px) {
+
+  html {
+    height: auto;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 24px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+  }
+
+  .dogGif {
+  margin: 30px;
+  height: 400px;
+  width: 400px;
+  position: sticky;
+  left: 405px;
+  z-index: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dogGif img {
+  height: 400px;
+  width: auto;
+}
+
+.pages {
+  position: relative;
+  top: -25px;
+  left: 500px;
+  z-index: 1;
+  height: 600px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 250px;
+}
+
+.pages > div {
+  height: 100%;
+  position: relative;
+  display: flex;
+  left: 0;
+  flex-direction: column;
+  justify-content: center;
+  margin: 75px 0;
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+}
+
+.mediaRow,
+.insidePhoto,
+.insideVideo,
+.insideDesign,
+.insideLight,
+.insideDJ {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  text-wrap: nowrap;
+  gap: 175px;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.insidePhoto,
+.insideVideo,
+.insideDesign,
+.insideLight,
+.insideDJ {
+  gap: 20px
+}
+
 }
