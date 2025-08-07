@@ -1,0 +1,214 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  background-color: #161616;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: "Aglet Mono", monospace;
+  font-weight: 100;
+  font-size: 20px;
+  letter-spacing: -1.4px;
+  color: #e0e0e0;
+}
+
+.wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  padding: 0 60px;
+  gap: 60px;
+  scroll-behavior: smooth;
+}
+
+.dogGif {
+  margin: 30px;
+  height: 350px;
+  width: 350px;
+  position: sticky;
+  left: 175px;
+  z-index: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dogGif img {
+  height: 300px;
+  width: auto;
+}
+
+.pages {
+  position: relative;
+  top: -25px;
+  left: 100px;
+  z-index: 1;
+  height: 600px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 80px;
+}
+
+.pages > div {
+  height: 100%;
+  position: relative;
+  display: flex;
+  left: 0;
+  flex-direction: column;
+  justify-content: center;
+  margin: 75px 0;
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+}
+
+.pages > div:last-child {
+  margin-right: 100px; /* no extra right margin */
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+  pointer-events: none;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.1s ease-out;
+}
+
+.toggle {
+   transition: opacity 0.3s ease;
+}
+
+.toggle:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* ========== FLEX CONTAINERS FOR INSIDE CONTENT ========== */
+
+.mediaRow,
+.insidePhoto,
+.insideVideo,
+.insideDesign,
+.insideLight,
+.insideDJ {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  text-wrap: nowrap;
+  gap: 70px;
+  overflow: auto;
+  max-width: 100%;
+}
+
+.insidePhoto,
+.insideVideo,
+.insideDesign,
+.insideLight,
+.insideDJ {
+  gap: 5px;
+}
+
+/* Media Row container in each content */
+.mediaRow {
+  margin-top: 5px;
+}
+
+/* ========== CONTENT BLOCKS ========== */
+
+.photo,
+.video,
+.design,
+.light,
+.dj {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.block img {
+  max-height: 300px;
+  width: auto;
+  display: block;
+  padding-right: 30px;
+}
+
+/* ========== CONTENT PANEL ANIMATION ========== */
+
+.content {
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  width: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.content.open {
+  width: auto;
+  opacity: 1;
+  max-height: none;
+  overflow: visible;
+  margin-right: 50px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  html, body, .wrapper {
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .pages {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .pages > div {
+    margin: 20px 0;
+    transform: none !important;
+  }
+
+  .dogGif {
+    position: relative;
+    left: auto;
+    top: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dogGif img {
+    height: auto;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .mediaRow,
+  .insidePhoto,
+  .insideVideo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .block img {
+    max-width: 100%;
+    height: auto;
+  }
+}
