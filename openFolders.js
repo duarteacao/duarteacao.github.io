@@ -101,14 +101,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function scrollWithMarginAndWait(element, marginLeft = 100) {
+  // Updated scroll function for horizontal + vertical
+  function scrollWithMarginAndWait(element, margin = 100) {
     return new Promise((resolve) => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const targetLeft = element.getBoundingClientRect().left + window.pageXOffset;
-      const scrollTarget = Math.max(0, targetLeft - marginLeft);
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+      // If on mobile, add the fixed dogGif height to margin so content clears it
+      if (isMobile) {
+        const dogGif = document.querySelector(".dogGif");
+        if (dogGif) {
+          const gifHeight = dogGif.getBoundingClientRect().height;
+          margin = gifHeight + 20; // 20px extra breathing room
+        }
+      }
+
+      let scrollTarget;
+      let scrollOptions;
+
+      if (isMobile) {
+        // Vertical scroll
+        const targetTop = element.getBoundingClientRect().top + window.pageYOffset;
+        scrollTarget = Math.max(0, targetTop - margin);
+        scrollOptions = { top: scrollTarget, behavior: prefersReducedMotion ? "auto" : "smooth" };
+      } else {
+        // Horizontal scroll
+        const targetLeft = element.getBoundingClientRect().left + window.pageXOffset;
+        scrollTarget = Math.max(0, targetLeft - margin);
+        scrollOptions = { left: scrollTarget, behavior: prefersReducedMotion ? "auto" : "smooth" };
+      }
 
       if (prefersReducedMotion) {
-        window.scrollTo({ left: scrollTarget, behavior: "auto" });
+        window.scrollTo(scrollOptions);
         resolve();
         return;
       }
@@ -126,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       window.addEventListener("scroll", onScroll);
-      window.scrollTo({ left: scrollTarget, behavior: "smooth" });
+      window.scrollTo(scrollOptions);
       onScroll();
     });
   }
