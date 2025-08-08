@@ -32,9 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.propertyName !== "opacity") return;
         e.target.removeEventListener("transitionend", onEnd);
         completed++;
-        if (completed === elements.length) {
-          resolve();
-        }
+        if (completed === elements.length) resolve();
       }
 
       elements.forEach((el) => {
@@ -101,38 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Updated scroll function for horizontal + vertical
-  function scrollWithMarginAndWait(element, margin = 100) {
+  function scrollWithMarginAndWait(element, margin = 100, vertical = false) {
     return new Promise((resolve) => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-      // If on mobile, add the fixed dogGif height to margin so content clears it
-      if (isMobile) {
-        const dogGif = document.querySelector(".dogGif");
-        if (dogGif) {
-          const gifHeight = dogGif.getBoundingClientRect().height;
-          margin = gifHeight + 20; // 20px extra breathing room
-        }
-      }
-
-      let scrollTarget;
-      let scrollOptions;
-
-      if (isMobile) {
-        // Vertical scroll
-        const targetTop = element.getBoundingClientRect().top + window.pageYOffset;
-        scrollTarget = Math.max(0, targetTop - margin);
-        scrollOptions = { top: scrollTarget, behavior: prefersReducedMotion ? "auto" : "smooth" };
-      } else {
-        // Horizontal scroll
-        const targetLeft = element.getBoundingClientRect().left + window.pageXOffset;
-        scrollTarget = Math.max(0, targetLeft - margin);
-        scrollOptions = { left: scrollTarget, behavior: prefersReducedMotion ? "auto" : "smooth" };
-      }
+      const rect = element.getBoundingClientRect();
+      const offset = vertical ? rect.top + window.pageYOffset : rect.left + window.pageXOffset;
+      const scrollTarget = Math.max(0, offset - margin);
 
       if (prefersReducedMotion) {
-        window.scrollTo(scrollOptions);
+        window.scrollTo(vertical ? { top: scrollTarget } : { left: scrollTarget });
         resolve();
         return;
       }
@@ -150,9 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       window.addEventListener("scroll", onScroll);
-      window.scrollTo(scrollOptions);
+      window.scrollTo(vertical ? { top: scrollTarget, behavior: "smooth" } : { left: scrollTarget, behavior: "smooth" });
       onScroll();
     });
+  }
+
+  function uniqueElements(arr) {
+    return Array.from(new Set(arr));
   }
 
   async function openContent(toggle, content) {
@@ -164,7 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isTop = isTopLevelToggle(toggle);
     const rightPageSiblings = getRightPageSiblings(thisPageDiv);
     const rightNestedSiblings = isTop ? [] : getRightNestedSiblings(toggle);
-    const allToFade = [...rightPageSiblings, ...rightNestedSiblings];
+
+    const allToFade = uniqueElements([...rightPageSiblings, ...rightNestedSiblings]);
 
     await fadeElements(allToFade, true);
 
@@ -175,7 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const scrollTarget = isTop ? thisPageDiv : thisSection;
     if (scrollTarget) {
-      await scrollWithMarginAndWait(scrollTarget, 200);
+      const isMobile = window.innerWidth <= 768;
+      await scrollWithMarginAndWait(scrollTarget, 200, isMobile);
     }
 
     await fadeElements(allToFade, false);
@@ -191,11 +172,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const isTop = isTopLevelToggle(toggle);
     const rightPageSiblings = getRightPageSiblings(thisPageDiv);
     const rightNestedSiblings = isTop ? [] : getRightNestedSiblings(toggle);
-    const allToFade = [...rightPageSiblings, ...rightNestedSiblings];
+
+    const allToFade = uniqueElements([...rightPageSiblings, ...rightNestedSiblings]);
 
     const scrollTarget = isTop ? thisPageDiv : thisSection;
     if (scrollTarget) {
-      await scrollWithMarginAndWait(scrollTarget, 1500);
+      const isMobile = window.innerWidth <= 768;
+      await scrollWithMarginAndWait(scrollTarget, 1500, isMobile);
     }
 
     await fadeElements(allToFade, true);
@@ -227,20 +210,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", async (event) => {
     let clickedInside = false;
-
     document.querySelectorAll(".content.open").forEach((openContent) => {
-      if (openContent.contains(event.target)) {
-        clickedInside = true;
-      }
+      if (openContent.contains(event.target)) clickedInside = true;
     });
-
     if (clickedInside) return;
 
-    for (const toggle of toggles) {
+    const openToggles = Array.from(toggles).filter((toggle) => {
       const content = toggle.nextElementSibling;
-      if (content && content.classList.contains("open")) {
-        await closeContent(toggle, content);
-      }
+      return content && content.classList.contains("open");
+    });
+
+    if (openToggles.length === 0) return;
+
+    const topLevelOpens = openToggles.filter((toggle) => isTopLevelToggle(toggle));
+    const toClose = topLevelOpens.length > 0 ? topLevelOpens : openToggles;
+
+    for (const toggle of toClose) {
+      const content = toggle.nextElementSibling;
+      await closeContent(toggle, content);
     }
   });
 });
