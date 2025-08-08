@@ -175,14 +175,8 @@ h2 {
   display: block;
 }
 
-.block iframe {
-  height: 300px;
-  width: 533px;
-  display: block;
-}
-
 .block video {
-  height: 300px;
+  max-height: 500px;
   width: auto;
 }
 
@@ -210,7 +204,7 @@ h2 {
   html {
     height: auto;
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     overflow-y: auto;
     font-size: 22px;
     flex-direction: column;
@@ -220,7 +214,7 @@ h2 {
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: hidden !important;
   }
 
   .wrapper {
@@ -309,14 +303,14 @@ h2 {
   }
 }
 
+/* LARGER SCREENS */
 
 @media (min-height: 900px) {
 
   html {
     height: auto;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-x: auto;
     font-size: 24px;
     flex-direction: column;
     align-items: center;
@@ -401,4 +395,75 @@ h2 {
   padding-right: 30px;
 }
 
+}
+
+/* FIX IFRAME ON SMALLER SCREENS */
+
+@media (max-height: 900px) {
+  .block iframe {
+  height: 300px;
+  max-width: 500px;
+  }
+
+  .block video {
+  height: 300px !important;
+  width: auto;
+}
+}
+
+/* LOAD-IN ANIMATIONS */
+
+@keyframes fadeInGif {
+  0% {
+    opacity: 0;
+    transform: translate(300px, 100px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(300px, 0px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.dogGif {
+  animation: fadeInGif 1.8s ease-in-out;
+}
+
+@keyframes fadeInPages {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.pages {
+  animation: fadeInPages 2.1s ease-in-out;
+}
+
+
+@keyframes fadeInGifMobile {
+  0% {
+    opacity: 0;
+    transform: translateY(150px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(150px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dogGif {
+    animation: fadeInGifMobile 1.8s ease-in-out;
+  }
 }
