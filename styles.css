@@ -181,6 +181,11 @@ h2 {
   display: block;
 }
 
+.block video {
+  height: 300px;
+  width: auto;
+}
+
 /* ========== CONTENT PANEL ANIMATION ========== */
 
 .content {
