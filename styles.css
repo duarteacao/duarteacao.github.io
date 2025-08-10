@@ -344,14 +344,14 @@ h2 {
 .pages {
   position: relative;
   top: -25px;
-  left: 500px;
+  left: 400px;
   z-index: 1;
   height: 600px;
   width: max-content;
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 250px;
+  gap: 150px;
 }
 
 .pages > div {
@@ -452,16 +452,17 @@ h2 {
 @keyframes fadeInGifLarge {
   0% {
     opacity: 0;
-    transform: translate(650px, 100px);
+    transform: translate(20vw, 100px);
   }
   50% {
     opacity: 1;
-    transform: translate(650px, 0px);
+    transform: translate(20vw, 0px);
   }
   100% {
     transform: translate(0px, 0px);
   }
 }
+
 
 @keyframes fadeInGifMobile {
   0% {
