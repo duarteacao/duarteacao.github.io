@@ -161,6 +161,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await fadeElements(allToFade, false);
     toggle.classList.remove("animating");
+
+    function updateSectionPadding(section) {
+  const openDiv = section.querySelector('div.open');
+  if (openDiv) {
+    section.style.setProperty('--dynamic-padding', openDiv.offsetHeight + 'px');
+  } else {
+    section.style.setProperty('--dynamic-padding', '0px');
+  }
+}
+
+async function openContent(toggle, content) {
+  if (toggle.classList.contains("animating")) return;
+  toggle.classList.add("animating");
+
+  toggle.classList.add("open");
+  content.classList.add("open");
+
+  const thisPageDiv = toggle.closest(".pages > div");
+  if (thisPageDiv) thisPageDiv.classList.add("open");
+
+  // update padding for parent .section
+  const section = toggle.closest(".section");
+  if (section) updateSectionPadding(section);
+
+  await animateContentOpen(content);
+
+  toggle.classList.remove("animating");
+}
+
+
   }
 
   async function closeContent(toggle, content) {
@@ -231,3 +261,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+

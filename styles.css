@@ -101,6 +101,37 @@ html {
 
 /* ========== FLEX CONTAINERS FOR INSIDE CONTENT ========== */
 
+.about .mediaRow {
+  display: flex;
+  flex-direction: column; /* stack p tags vertically */
+  align-items: flex-start; /* align left */
+  gap: 0.2rem; /* space between p tags */
+  margin-top: 2px;
+  overflow: visible;
+}
+
+.about .mediaRow p {
+  align-self: flex-start;
+  width: 600px !important;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.about .mediaRow p:nth-of-type(3) {
+  margin-top: 10px;
+}
+
+.about .mediaRow p:last-of-type {
+  transform: translateY(10px);
+  font-size: 25px;
+  display: none;
+}
+
+.about span {
+  font-size: 0.70rem;
+  opacity: 60%;
+}
+
 .mediaRow,
 .insidePhoto,
 .insideVideo,
@@ -124,7 +155,31 @@ html {
   gap: 5px;
 }
 
-/* Media Row container in each content */
+.about .mediaRow p,
+.block-text p{
+  font-size: 0.87rem;
+  align-self: flex-start;
+  width: 550px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.block-text p {
+  line-height: 1.2em;
+  font-size: 0.8rem;
+  margin-top: 0.7em;
+}
+
+.block-text p:first-of-type {
+  margin-top: 40px
+}
+
+a {
+  text-decoration: none;
+  color:#e0e0e0;
+  opacity: 60%;
+}
+
 .mediaRow {
   margin-top: 5px;
 }
@@ -164,11 +219,6 @@ h2 {
   margin-left: -20px;
 }
 
-.block-text p {
-  margin-top: 60px;
-  font-size: 0.9rem;
-}
-
 .block img {
   max-height: 300px;
   width: auto;
@@ -193,7 +243,7 @@ h2 {
 .content.open {
   width: auto;
   opacity: 1;
-  max-height: none;
+  max-height: 200px;
   overflow: visible;
   margin-right: 50px;
 }
