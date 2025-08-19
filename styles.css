@@ -121,11 +121,6 @@ html {
   margin-top: 10px;
 }
 
-.about .mediaRow p:last-of-type {
-  transform: translateY(10px);
-  font-size: 25px;
-}
-
 .about span,
 .block-text span {
   font-size: 0.70rem;
