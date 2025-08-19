@@ -179,6 +179,13 @@ a {
   text-decoration: none;
   color:#e0e0e0;
   opacity: 60%;
+  font-weight: 100;
+  transition: opacity 0.2s ease-in, color 0.2s ease-in;
+}
+
+a:hover {
+  opacity: 100%;
+  color: white;
 }
 
 .mediaRow {
