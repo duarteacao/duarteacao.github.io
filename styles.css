@@ -335,7 +335,7 @@ h2 {
     align-items: flex-start;
     gap: 15px;
     overflow: visible;
-    max-width: 100%;
+    width: 100%;
     text-align: start;
   }
 
@@ -345,15 +345,71 @@ h2 {
   .insideLight,
   .insideDJ {
     width: 300px;
-    flex-direction: row !important;
-    overflow-y: auto;
+    flex-direction: column !important;
+    gap: 5px;
+    overflow-y: none;
     padding-right: 40px;
   }
 
-  .block img {
-    max-width: 250px;
-    height: auto;
+  .about .mediaRow p {
+    align-self: flex-start;
+    width: 250px !important;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .about .mediaRow p,
+  .block-text p{
+    font-size: 0.87rem;
+    width: 250px;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .block-text p {
+    opacity: 0;
+    transform: translateY(10px);
+    margin-top: 0px;
+    margin-bottom: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: 
+      opacity 0.6s ease,
+      transform 0.6s ease,
+      max-height 0.6s ease,
+      margin-bottom 0.6s ease;
+  }
+
+  .block-text p.visible {
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-height: 500px;        
+  }
+
+  .block-text p:first-of-type.visible {
+    margin-top: 20px;
+  }
+  
+  .block img,
+  .block video {
+    max-height: fit-content;
+    width: 100%;
     padding-right: 0;
+  }
+
+  .block-text h1,
+  .block-text h2,
+  .block img {
+    cursor: pointer;
   }
 
   .content.open {
